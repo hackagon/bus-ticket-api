@@ -1,0 +1,20 @@
+NODEJS frameworks:
+
+Express : Middleware
+        --> API
+        --> authentication
+        --> authorization
+        --> validation
+        --> upload image
+        --> ...
+
+SocketIO : observer
+
+
+Loopback 3: observer + Middleware
+        --> logic
+        --> authentication
+
+Loopback 4 (active) + NestJS (LTS): IoC (inversion of Control) dependency injection
+        --> route, controller, repository, model
+        --> service --> inject
