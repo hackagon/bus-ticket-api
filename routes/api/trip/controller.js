@@ -15,7 +15,12 @@ module.exports.getTrips = (req, res, next) => {
 }
 
 module.exports.getTripById = (req, res, next) => {
-
+  const { id } = req.params;
+  Trip.findById()
+    .populate("fromStationId")
+    .populate("toStationId")
+    .then(trip => res.status(200).json(trip))
+    .catch(err => res.status(500).json(err))
 }
 
 module.exports.createTrip = (req, res, next) => {
