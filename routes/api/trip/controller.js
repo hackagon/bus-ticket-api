@@ -9,17 +9,21 @@ module.exports.getTrips = (req, res, next) => {
   Trip.find()
     .populate("fromStationId")
     .populate("toStationId")
-    // .select("-seats")
+    .select("-seats")
     .then(trips => res.status(200).json(trips))
     .catch(err => res.status(500).json(err))
 }
 
 module.exports.getTripById = (req, res, next) => {
   const { id } = req.params;
-  Trip.findById()
+  Trip.findById(id)
     .populate("fromStationId")
     .populate("toStationId")
-    .then(trip => res.status(200).json(trip))
+    .then(trip => {
+      if (!trip) return Promise.reject({ message: "Trip not found" })
+
+      return res.status(200).json(trip)
+    })
     .catch(err => res.status(500).json(err))
 }
 
@@ -31,7 +35,6 @@ module.exports.createTrip = (req, res, next) => {
   //   seats.push(newSeat)
   // })
   const seats = seatCodes.map(code => new Seat({ code }))
-  console.log("module.exports.createTrip -> seats", seats)
 
   const newTrip = new Trip({
     fromStationId, toStationId, startTime, price, seats
